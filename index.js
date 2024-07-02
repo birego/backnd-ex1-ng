@@ -1,5 +1,8 @@
 import express from 'express';
 import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -16,7 +19,7 @@ app.get('/api/hello', async (req, res) => {
         }
 
         const { city } = ipInfo.data;
-        const weather = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=9c605d02b7a4491dc019a005bfe334e8&units=metric`);
+        const weather = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.OPENWEATHERMAP_API_KEY}&units=metric`);
         const temperature = weather.data.main.temp;
         res.json({
             client_ip: clientIp,
@@ -28,6 +31,7 @@ app.get('/api/hello', async (req, res) => {
         res.status(500).send('Error retrieving information');
     }
 });
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
