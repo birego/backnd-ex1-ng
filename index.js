@@ -10,7 +10,7 @@ app.get('/api/hello', async (req, res) => {
     try {
         const ipInfo = await axios.get(`http://ip-api.com/json/${clientIp}`);
         console.log(`IP Info: ${JSON.stringify(ipInfo.data)}`);
-        
+            
         if (ipInfo.data.status === 'fail') {
             throw new Error(`Failed to retrieve IP information: ${ipInfo.data.message}`);
         }
